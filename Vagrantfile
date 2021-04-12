@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "bento/ubuntu-18.04"
+  config.vm.box = "bento/ubuntu-20.04"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 8888, host: 8888
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -64,12 +64,20 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+  apt-get update
+  apt-get -y upgrade
+  apt-get -y install libssl-dev openjdk-8-jdk python3-pip python3-numpy
   wget https://ftp.cc.uoc.gr/mirrors/apache/spark/spark-2.4.7/spark-2.4.7-bin-hadoop2.7.tgz
   tar -zxvf spark-2.4.7-bin-hadoop2.7.tgz
   rm spark-2.4.7-bin-hadoop2.7.tgz
-  apt-get update
-  apt-get -y install openjdk-8-jdk python-numpy
   sed -i 's/log4j.rootCategory=INFO, console/log4j.rootCategory=ERROR, console/g' ./spark-2.4.7-bin-hadoop2.7/conf/log4j.properties.template
   mv ./spark-2.4.7-bin-hadoop2.7/conf/log4j.properties.template ./spark-2.4.7-bin-hadoop2.7/conf/log4j.properties
+  pip3 install python-igraph cairocffi pandas
+
   SHELL
+
+  config.vm.provision "shell", inline: "> /etc/profile.d/env_vars.sh", run: "always"
+  config.vm.provision "shell", inline: "echo \"export PYSPARK_PYTHON=/usr/bin/python3\" >> /etc/profile.d/env_vars.sh", run: "always"
+  config.vm.provision "shell", inline: "echo \"export PYSPARK_DRIVER_PYTHON=/usr/bin/python3\" >> /etc/profile.d/env_vars.sh", run: "always"
+
 end
