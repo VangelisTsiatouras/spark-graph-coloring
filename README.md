@@ -28,7 +28,7 @@ Finally, in order to execute the PySpark script run the following command:
 ## Examples
 
 By applying Local Maxima First Algorithm in the distributed environment of Spark, this script can solve efficiently the
-graph coloring problem even for large scale graphs. Some small examples are listed below.
+graph coloring problem even for large scale graphs. A small example is listed below.
 
 ![initial-graph](https://github.com/VangelisTsiatouras/spark-graph-coloring/blob/main/output_images/initial_graph.png)
 
