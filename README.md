@@ -7,7 +7,7 @@ More details about the task can be found [here](https://github.com/VangelisTsiat
 
 In order to run the script initially you should install [Vagrant](https://www.vagrantup.com/docs/installation) on your machine.
 
-Then you can build the VM by entering the following command:
+Then you can build the VM by entering the following command (it will take some time to finish...):
 
 ```bash
 vagrant up
@@ -15,14 +15,14 @@ vagrant up
 
 After that, the VM can be accessed by entering:
 
-```bash
+```bash 
 vagrant ssh
 ```
 
 Finally, in order to execute the PySpark script run the following command:
 
 ```bash
-~/spark-2.4.7-bin-hadoop2.7/bin/spark-submit --packages graphframes:graphframes:0.7.0-spark2.3-s_2.11  /vagrant/graph_coloring.py
+~/spark-2.4.7-bin-hadoop2.7/bin/spark-submit --packages graphframes:graphframes:0.8.1-spark2.4-s_2.11 /vagrant/graph_coloring.py
 ```
 
 ## Examples
