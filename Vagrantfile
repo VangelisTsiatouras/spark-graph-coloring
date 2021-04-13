@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "bento/ubuntu-20.04"
+  config.vm.box = "bento/ubuntu-18.04"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -65,8 +65,15 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
   apt-get update
-  apt-get -y upgrade
   apt-get -y install libssl-dev openjdk-8-jdk python3-pip python3-numpy
+  wget https://cmake.org/files/v3.20/cmake-3.20.0.tar.gz
+  tar -xf cmake-3.20.0.tar.gz
+  rm cmake-3.20.0.tar.gz
+  cd ./cmake-3.20.0
+  ./configure
+  make
+  sudo make install
+  cd /home/vagrant
   wget https://ftp.cc.uoc.gr/mirrors/apache/spark/spark-2.4.7/spark-2.4.7-bin-hadoop2.7.tgz
   tar -zxvf spark-2.4.7-bin-hadoop2.7.tgz
   rm spark-2.4.7-bin-hadoop2.7.tgz
